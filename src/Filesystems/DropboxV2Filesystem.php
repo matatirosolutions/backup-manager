@@ -1,8 +1,9 @@
-<?php namespace BackupManager\Filesystems;
+<?php
+namespace BackupManager\Filesystems;
 
 use League\Flysystem\Filesystem as Flysystem;
-use Srmklive\Dropbox\Client\DropboxClient;
-use Srmklive\Dropbox\Adapter\DropboxAdapter;
+use Spatie\Dropbox\Client;
+use Spatie\FlysystemDropbox\DropboxAdapter;
 
 /**
  * @package BackupManager\Filesystems
@@ -25,7 +26,7 @@ class DropboxV2Filesystem implements Filesystem
      */
     public function get(array $config)
     {
-        $client = new DropboxClient($config['token']);
+        $client = new Client($config['token']);
         return new Flysystem(new DropboxAdapter($client, $config['root']));
     }
 }
