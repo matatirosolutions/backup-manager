@@ -4,7 +4,9 @@
 [![License](https://poser.pugx.org/backup-manager/backup-manager/license.png)](https://packagist.org/packages/backup-manager/backup-manager)
 [![Total Downloads](https://poser.pugx.org/backup-manager/backup-manager/downloads.png)](https://packagist.org/packages/backup-manager/backup-manager)
 
-This package provides a framework-agnostic database backup manager for dumping to and restoring databases from S3, Dropbox, FTP, SFTP, and Rackspace Cloud.
+This package provides a framework-agnostic database backup manager for dumping to and restoring databases from S3 (and S3-compatible services) and the local filesystem, using Flysystem 3.
+
+> This fork supports Flysystem 3 only. The Backblaze, Dropbox, FTP, SFTP, WebDAV, Google Cloud Storage and Rackspace adapters of the original package have been removed as they depended on Flysystem 1.x.
 
 - use version 2+ for &gt;=PHP 7.3
 - use version 1 for &lt;PHP 7.2
@@ -86,57 +88,6 @@ This package provides a framework-agnostic database backup manager for dumping t
     'root'   => '',
     'use_path_style_endpoint' => false,
 ],
-'b2' => [
-    'type' => 'B2',
-    'key'    => '',
-    'accountId' => '',
-    'bucket' => '',
-],
-'gcs' => [
-    'type' => 'Gcs',
-    'key'    => '',
-    'secret' => '',
-    'version' => 'latest',
-    'bucket' => '',
-    'root'   => '',
-],
-'rackspace' => [
-    'type' => 'Rackspace',
-    'username' => '',
-    'key' => '',
-    'container' => '',
-    'zone' => '',
-    'root' => '',
-],
-'dropbox' => [
-    'type' => 'DropboxV2',
-    'token' => '',
-    'key' => '',
-    'secret' => '',
-    'app' => '',
-    'root' => '',
-],
-'ftp' => [
-    'type' => 'Ftp',
-    'host' => '',
-    'username' => '',
-    'password' => '',
-    'root' => '',
-    'port' => 21,
-    'passive' => true,
-    'ssl' => true,
-    'timeout' => 30,
-],
-'sftp' => [
-    'type' => 'Sftp',
-    'host' => '',
-    'username' => '',
-    'password' => '',
-    'root' => '',
-    'port' => 21,
-    'timeout' => 10,
-    'privateKey' => '',
-],
 'flysystem' => [
     'type' => 'Flysystem',
     'name' => 's3_backup',
@@ -151,13 +102,6 @@ This package provides a framework-agnostic database backup manager for dumping t
     'root' => '',
     'endpoint' => '',
     'use_path_style_endpoint' => false,
-],
-'webdav' => [
-    'type' => 'Webdav',
-    'baseUri' => 'http://myserver.com',
-    'userName' => '',
-    'password' => '',
-    'prefix' => '',
 ],
 ```
 
@@ -206,27 +150,6 @@ Then, you'll need to select the appropriate packages for the adapters that you w
 ```shell
 # to support s3
 composer require league/flysystem-aws-s3-v3
-
-# to support b2
-composer require mhetreramesh/flysystem-backblaze
-
-# to support google cs
-composer require league/flysystem-aws-s3-v2
-
-# to install the preferred dropbox v2 driver
-composer required spatie/flysystem-dropbox
-
-# to install legacy dropbox v2 driver
-composer require srmklive/flysystem-dropbox-v2
-
-# to support rackspace
-composer require league/flysystem-rackspace
-
-# to support sftp
-composer require league/flysystem-sftp
-
-# to support webdav (supported by owncloud nad many other)
-composer require league/flysystem-webdav
 ```
 
 ### Usage

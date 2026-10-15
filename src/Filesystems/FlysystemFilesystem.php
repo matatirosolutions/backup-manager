@@ -1,7 +1,6 @@
 <?php namespace BackupManager\Filesystems;
 
-use League\Flysystem\FilesystemInterface;
-use League\Flysystem\MountManager;
+use League\Flysystem\FilesystemOperator;
 
 /**
  * Class FlysystemFilesystem
@@ -10,19 +9,13 @@ use League\Flysystem\MountManager;
 class FlysystemFilesystem implements Filesystem
 {
     /**
-     * @var array|FilesystemInterface[]
+     * @var array|FilesystemOperator[]
      */
     private $filesystems;
 
-    /**
-     * @var MountManager
-     */
-    private $manager;
-
-    public function __construct(/* iterable */ $filesystems = [], MountManager $manager = null)
+    public function __construct(/* iterable */ $filesystems = [])
     {
         $this->filesystems = $filesystems;
-        $this->manager = $manager;
     }
 
     /**
@@ -36,10 +29,6 @@ class FlysystemFilesystem implements Filesystem
 
     public function get(array $config)
     {
-        if (isset($config['prefix']) && null !== $this->manager) {
-            return $this->manager->getFilesystem($config['prefix']);
-        }
-
         return $this->filesystems[$config['name']];
     }
 }

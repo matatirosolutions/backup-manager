@@ -33,7 +33,7 @@ class FilesystemProvider
 
     /**
      * @param $name
-     * @return \League\Flysystem\Filesystem
+     * @return \League\Flysystem\FilesystemOperator
      * @throws FilesystemTypeNotSupported
      * @throws ConfigNotFoundForConnection
      * @throws ConfigFieldNotFound

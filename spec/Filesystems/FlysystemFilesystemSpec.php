@@ -3,10 +3,8 @@
 namespace spec\BackupManager\Filesystems;
 
 use BackupManager\Filesystems\FlysystemFilesystem;
-use League\Flysystem\FilesystemInterface;
-use League\Flysystem\MountManager;
+use League\Flysystem\FilesystemOperator;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class FlysystemFilesystemSpec extends ObjectBehavior
 {
@@ -26,18 +24,10 @@ class FlysystemFilesystemSpec extends ObjectBehavior
         }
     }
 
-    public function it_should_provide_an_instance_of_an_flysystem_filesystem(FilesystemInterface $filesystem)
+    public function it_should_provide_an_instance_of_an_flysystem_filesystem(FilesystemOperator $filesystem)
     {
         $name = 's3_backup';
         $this->beConstructedWith([$name => $filesystem]);
-        $this->get(['name' => $name])->shouldHaveType(FilesystemInterface::class);
-    }
-
-    public function it_should_provide_an_instance_of_an_flysystem_filesystem_in_mount_manager(MountManager $manager, FilesystemInterface $filesystem)
-    {
-        $prefix = 'upload';
-        $manager->getFilesystem(Argument::exact($prefix))->willReturn($filesystem);
-        $this->beConstructedWith([], $manager);
-        $this->get(['prefix' => $prefix])->shouldHaveType(FilesystemInterface::class);
+        $this->get(['name' => $name])->shouldHaveType(FilesystemOperator::class);
     }
 }

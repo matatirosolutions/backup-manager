@@ -25,7 +25,7 @@ class LocalFilesystemSpec extends ObjectBehavior
 
     public function it_should_provide_an_instance_of_a_local_filesystem()
     {
-        $this->get($this->getConfig())->getAdapter()->shouldHaveType('League\Flysystem\Adapter\Local');
+        $this->get($this->getConfig())->shouldHaveType('League\Flysystem\FilesystemOperator');
     }
 
     public function getConfig()
@@ -33,5 +33,18 @@ class LocalFilesystemSpec extends ObjectBehavior
         return [
             'root' => __DIR__,
         ];
+    }
+
+    public function it_should_read_and_write_files_beneath_its_root()
+    {
+        $root = sys_get_temp_dir() . '/bm-local-spec-' . uniqid();
+        $filesystem = $this->get(['root' => $root]);
+
+        $filesystem->write('file.txt', 'contents');
+        $filesystem->read('file.txt')->shouldBe('contents');
+
+        $filesystem->delete('file.txt');
+        $filesystem->fileExists('file.txt')->shouldBe(false);
+        rmdir($root);
     }
 }

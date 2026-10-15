@@ -23,7 +23,7 @@ class FilesystemProviderSpec extends ObjectBehavior
     public function it_should_provide_requested_filesystems_by_their_names()
     {
         $this->add(new LocalFilesystem);
-        $this->get('local')->shouldHaveType('League\Flysystem\Filesystem');
+        $this->get('local')->shouldHaveType('League\Flysystem\FilesystemOperator');
     }
 
     public function it_should_throw_an_exception_if_a_filesystem_is_unsupported()
